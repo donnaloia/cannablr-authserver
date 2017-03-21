@@ -124,9 +124,16 @@ class ValidateToken(Resource):
             if user is None:
                 abort(400)
             return {'user': user.to_json}, 200
+
+# Simply returns a 200 status if service is running
+class HealthCheck(Resource):
+    def get(self):
+        status_message = "Service is running!"
+        return status_message, 200
         
 
 # Endpoints
+api.add_resource(HealthCheck, '/status')
 api.add_resource(UserResource,
                  '/account',
                  '/account/<int:user_id>')
